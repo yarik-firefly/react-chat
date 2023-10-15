@@ -1,0 +1,36 @@
+.audio-message {
+  width: 296px;
+  height: 63px;
+  background: #3674ff;
+  border-radius: 12px 12px 12px 0px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+
+  span {
+    z-index: 10;
+  }
+
+  &__progress-bar {
+    width: 0%;
+    height: inherit;
+    background-color: #418fff;
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    left: 0;
+    border-radius: 12px 0px 0px 0px;
+    transition: width 0.5s ease;
+  }
+
+  &__controll {
+    display: flex;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: #0f3997;
+    border-radius: 50%;
+  }
+}

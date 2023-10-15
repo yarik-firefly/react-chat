@@ -1,0 +1,40 @@
+.wrapper__auth-fields__r {
+  height: 517px !important;
+  input {
+    width: 340px;
+    height: 56px;
+  }
+
+  .success-register-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    img {
+      margin-bottom: 35px;
+    }
+
+    &__text {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px;
+
+      & :first-child {
+        font-family: Roboto;
+        font-size: 22px;
+        font-weight: 400;
+        line-height: 25px;
+      }
+
+      & :last-child {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+        font-weight: 300;
+        line-height: 26px;
+        color: #9f9f9f;
+      }
+    }
+  }
+}

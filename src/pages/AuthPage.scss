@@ -1,0 +1,63 @@
+.wrapper {
+  width: 430px;
+  height: 467px;
+
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 30%);
+
+  &__r {
+    width: 430px;
+    height: 467px;
+
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 9%);
+  }
+
+  &__auth-window-title {
+    text-align: center;
+    & :first-child {
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 33px;
+      letter-spacing: 0px;
+    }
+
+    & :last-child {
+      opacity: 0.5;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 21px;
+      letter-spacing: 0.12857140600681305px;
+    }
+  }
+
+  &__auth-fields {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 25px 0px #0000000b;
+
+    &__r {
+      height: 517px !important;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 0px 25px 0px #0000000b;
+    }
+
+    &__l {
+      height: 356px !important;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0px 0px 25px 0px #0000000b;
+    }
+  }
+}

@@ -1,23 +1,59 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes, useNavigate } from "react-router-dom";
+import React from "react";
+import "./App.scss";
+import AuthPage from "./pages/AuthPage";
+import Register from "./components/Auth/Register/Register";
+import Login from "./components/Auth/Login/Login";
+import { Home } from "./pages/Home";
+import { useDispatch, useSelector } from "react-redux";
+import { getMe, isAuth } from "./redux/slices/authSlice";
+import Loading from "./components/Loading";
+import VerifyUser from "./pages/VerifyUser";
 
 function App() {
+  const navigate = useNavigate();
+  const { auth, statusMe, infoMe, statusLogin } = useSelector(
+    (state) => state.authSlice
+  );
+  const dispatch = useDispatch();
+
+  const checkAuth = () => {
+    try {
+      dispatch(getMe());
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    checkAuth();
+  }, []);
+
+  React.useEffect(() => {
+    if (auth) {
+      navigate("/main");
+    } else {
+      navigate("/auth");
+    }
+
+    // if (statusMe === "ERROR" && !auth && !infoMe.length) {
+    // }
+  }, [auth]);
+
+  if (statusMe === "LOADING" && !auth) {
+    return (
+      <div className="App__loading">
+        <Loading />
+      </div>
+    );
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/auth" element={<AuthPage />} />
+        <Route path="/main" element={<Home />} />
+        <Route path="/user/verify" element={<VerifyUser />} />
+      </Routes>
     </div>
   );
 }
