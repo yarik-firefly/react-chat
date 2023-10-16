@@ -8,6 +8,11 @@
       border-right: 1px black solid;
     }
 
+    & .ant-col.ant-col-6.css-pr0fja {
+      padding: 10px 12px 10px 12px;
+      border-right: 1px solid #f7f7f7;
+    }
+
     & .ant-col.ant-col-6.css-dev-only-do-not-override-pr0fja {
       padding: 10px 12px 10px 12px;
       border-right: 1px solid #f7f7f7;
@@ -89,6 +94,10 @@
     height: 38px;
   }
 
+  & .ant-col.ant-col-6.css-pr0fja {
+    border-right: 1px solid #f7f7f7;
+  }
+
   & .ant-col.ant-col-6.css-dev-only-do-not-override-pr0fja {
     border-right: 1px solid #f7f7f7;
   }
@@ -102,6 +111,13 @@
     position: sticky;
     bottom: 10px;
 
+    & #my-area {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  & .ant-col.ant-col-18.css-pr0fja {
     #my-area {
       display: flex;
       justify-content: center;

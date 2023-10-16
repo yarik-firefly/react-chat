@@ -15,7 +15,7 @@ import UploadImage from "./Upload/UploadImage";
 import { upload } from "../redux/slices/uploadSlice";
 import socket from "../core/socket";
 
-export const Input = () => {
+export const Input = ({setIsTyping}) => {
   const [value, setValue] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const [attachments, setAttachments] = React.useState([]);
@@ -123,6 +123,7 @@ export const Input = () => {
     socket.emit("DIALOG:TYPING", { currentDialogId, user: infoMe });
 
     if (e.keyCode === 13 || e.type === "click") {
+      setIsTyping(false)
       const obj = {
         text: value,
         dialogId: currentDialogId,

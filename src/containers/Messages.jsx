@@ -21,7 +21,7 @@ export const Messages = ({ setIsTyping, isTyping }) => {
     clearTimeout(typingInterval);
     typingInterval = setTimeout(() => {
       setIsTyping(false);
-    }, 2000);
+    }, 500);
   };
 
   React.useEffect(() => {

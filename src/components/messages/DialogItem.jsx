@@ -34,6 +34,9 @@ export const DialogItem = ({
     "#5d14fa",
   ];
 
+  const color = Math.round(Math.random() * 12);
+
+
   const dispatch = useDispatch();
   const { dialogs, currentDialogId, statusDialogs } = useSelector(
     (state) => state.dialogsSlice
@@ -41,7 +44,6 @@ export const DialogItem = ({
 
   const { infoMe } = useSelector((state) => state.authSlice);
 
-  const color = Math.round(Math.random() * 12);
 
   const myPartner = () => {
     return infoMe._id === author._id ? partner : author
@@ -58,7 +60,7 @@ export const DialogItem = ({
     >
       <div style={{ display: "flex" }}>
         <div
-          style={{ backgroundColor: colors[2] }}
+          style={{ backgroundColor: colors[3] }}
           className="middle-section__dialogs__avatar"
         >
           <img src={null} alt="" />
