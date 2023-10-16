@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "../../axios/axios";
 
-export const uploadImage = createAsyncThunk(
+export const upload = createAsyncThunk(
   "upload/uploadImage",
   async (info) => {
     const formData = new FormData();
 
-    formData.append("image", info);
+    formData.append("file", info);
     const { data} = await axios.post("/files", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -31,14 +31,14 @@ const uploadSlice = createSlice({
     },
   },
   extraReducers: {
-    [uploadImage.pending]: (state, action) => {
+    [upload.pending]: (state, action) => {
       state.statusUploadImage = "LOADING";
     },
-    [uploadImage.fulfilled]: (state, action) => {
+    [upload.fulfilled]: (state, action) => {
       state.statusUploadImage = "SUCCESS";
       state.files.push(action.payload);
     },
-    [uploadImage.rejected]: (state, action) => {
+    [upload.rejected]: (state, action) => {
       state.statusUploadImage = "ERROR";
     },
   },

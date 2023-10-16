@@ -35,6 +35,8 @@ export const Home = () => {
   );
   const { infoMe } = useSelector((state) => state.authSlice);
 
+  const [isTyping, setIsTyping] = React.useState(false);
+
   const getDialogForUser = (obj) => {
     dispatch(getDialogs());
   };
@@ -62,7 +64,7 @@ export const Home = () => {
 
   React.useEffect(() => {
     barRef.current.scrollTo(0, 999999);
-  }, [messages]);
+  }, [messages, isTyping]);
 
   const onNewMessage = (mes) => {
     console.log(mes);
@@ -100,7 +102,7 @@ export const Home = () => {
           </Col>
           <Col span={18}>
             <div ref={barRef} className="middle-section__right-bar">
-              <Messages />
+              <Messages setIsTyping={setIsTyping} isTyping={isTyping} />
             </div>
           </Col>
           <Col span={6}></Col>

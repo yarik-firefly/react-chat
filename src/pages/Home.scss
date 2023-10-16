@@ -107,6 +107,12 @@
     }
   }
 
+  &
+    .ant-upload-wrapper.css-dev-only-do-not-override-pr0fja.ant-upload-picture-card-wrapper {
+    padding-left: 179px;
+    background-color: white;
+  }
+
   &__loading {
     align-items: center;
     height: 40vh;
@@ -122,6 +128,7 @@
     max-height: 100vh;
     overflow: auto;
     height: 88vh;
+    height: calc(88vh - 20px);
 
     #center {
       flex-direction: column;
@@ -176,6 +183,36 @@
     width: 753px;
     height: 45px;
     position: relative;
+
+    #record {
+      left: 4px;
+      position: absolute;
+      top: -2px;
+      cursor: pointer;
+      width: 45px;
+      height: 45px;
+
+      animation: record-play infinite 2s linear;
+
+      @keyframes record-play {
+        0% {
+          transform: scale(1);
+        }
+        25% {
+          transform: scale(1.1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        75% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    }
+
     input {
       width: inherit;
       height: inherit;
@@ -376,6 +413,17 @@
     margin-top: 15px;
     align-items: end;
 
+    &__one-photo {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: start;
+    }
+
+    // .one-photo {
+    //   width: 170px;
+    //   background-size: 170px;
+    // }
+
     &__my {
       justify-content: end;
       display: flex;
@@ -384,6 +432,13 @@
       margin-top: 45px;
       align-items: end;
       flex-direction: row-reverse;
+      position: relative;
+
+      // .data {
+      //   position: absolute;
+      //   top: 173px;
+      //   right: 116px;
+      // }
 
       .checkout {
         position: relative;
@@ -415,10 +470,46 @@
       padding: 5px;
 
       &__attachments {
+        $self: &;
         height: 47px;
         display: flex;
         margin-right: 5px;
         gap: 5px;
+        cursor: pointer;
+
+        & > div {
+          transition: opacity 0.3s ease-in-out;
+
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+
+        &__one-photo {
+          & > div {
+            transition: opacity 0.3s ease-in-out;
+
+            &:hover {
+              opacity: 0.5;
+            }
+          }
+          .one-photo {
+            width: 170px;
+            height: 170px;
+            background-size: 170px;
+            border-radius: 10px;
+            cursor: pointer;
+          }
+
+          .audio-message {
+            opacity: 1;
+            cursor: pointer;
+
+            &:hover {
+              opacity: 1;
+            }
+          }
+        }
 
         div {
           background-position: center;
@@ -445,6 +536,13 @@
         border: 1px solid #ececec;
         box-shadow: 0px 4px 4px 0px #00000006;
         border-radius: 12px 12px 0px 12px;
+
+        .one-photo {
+          width: 170px;
+          height: 170px;
+          background-size: 170px;
+          // margin: 50px 0;
+        }
 
         & :last-child {
           position: absolute;

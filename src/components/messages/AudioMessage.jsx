@@ -7,7 +7,7 @@ import audioPath from "../../static/img/Combined Shape (1).png";
 import audio from "../../static/img/jg-032316-sfx-clock-tick-with-alarm.mp3";
 import currentTime from "../../helpers/currentTime";
 
-export const AudioMessage = () => {
+export const AudioMessage = ({audioSrc}) => {
   const audioRef = React.useRef(null);
   const progressRef = React.useRef(null);
   const [play, setPlay] = React.useState(false);
@@ -51,6 +51,7 @@ export const AudioMessage = () => {
   };
 
   return (
+    
     <div className="audio-message">
       <div
         style={{ width: progress + "%" }}
@@ -62,7 +63,7 @@ export const AudioMessage = () => {
       </span>
       <span>
         <img src={audioPath} alt="" />
-        <audio ref={audioRef} src={audio} />
+        <audio ref={audioRef} src={audioSrc} />
       </span>
       <span>{currentTime(time)}</span>
     </div>

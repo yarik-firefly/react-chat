@@ -4,10 +4,12 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import { axios } from "../../axios/axios";
+import socket from "../../core/socket";
 
 export const getMessages = createAsyncThunk(
   "dialogs/getMessages",
   async (id) => {
+    socket.emit("DIALOG:JOIN", id);
     const { data } = await axios.get("/messages?dialog=" + id);
 
     return data;

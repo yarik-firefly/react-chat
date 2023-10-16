@@ -6,10 +6,10 @@ class chatApi {
     return await axios.get(`/dialogs`);
   }
 
-  async uploadImage(info) {
+  async upload(info) {
     const formData = new FormData();
 
-    formData.append("image", info);
+    formData.append("file", info);
     const { data } = await axios.post("/files", formData, {
       headers: {
         "Content-Type": "multipart/form-data",

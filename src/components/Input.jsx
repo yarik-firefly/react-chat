@@ -6,21 +6,74 @@ import smile from "../static/img/Bitmap (5).png";
 import camera from "../static/img/Bitmap (6).png";
 import path from "../static/img/Path.png";
 import micro from "../static/img/image.png";
+import recordIco from "../static/img/record.png";
+
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../redux/slices/dialogsSlice";
 import chatApi from "../service/chat.service";
 import UploadImage from "./Upload/UploadImage";
+import { upload } from "../redux/slices/uploadSlice";
+import socket from "../core/socket";
 
 export const Input = () => {
   const [value, setValue] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const [attachments, setAttachments] = React.useState([]);
+  const [record, setRecord] = React.useState(false);
+  const [recorder, setMediaRecorder] = React.useState();
   const [state, setState] = React.useState({
     previewOpen: false,
     previewImage: "",
     previewTitle: "",
     fileList: attachments,
   });
+
+  const { currentDialogId } = useSelector((state) => state.dialogsSlice);
+  const { infoMe } = useSelector((state) => state.authSlice);
+
+  const dispatch = useDispatch();
+
+  window.navigator.getUserMedia =
+    window.navigator.getUserMedia ||
+    window.navigator.mozGetUserMedia ||
+    window.navigator.msGetUserMedia ||
+    window.navigator.webkitGetUserMedia;
+
+  const onError = (err) => {
+    console.log("The following error occured: " + err);
+  };
+
+  const onRecord = () => {
+    if (navigator.getUserMedia) {
+      navigator.getUserMedia({ audio: true }, onRecording, onError);
+    }
+  };
+
+  const onRecording = (stream) => {
+    const recorder = new MediaRecorder(stream);
+    setMediaRecorder(recorder);
+
+    recorder.start();
+
+    recorder.onstart = () => {
+      setRecord(true);
+    };
+
+    recorder.onstop = () => {
+      setRecord(false);
+    };
+
+    recorder.ondataavailable = (e) => {
+      // const audioUrl = window.URL.createObjectURL(e.data);
+      // new Audio(audioUrl).play();
+      const file = new File([e.data], "audio.webm");
+
+      // setLoading(true);
+      chatApi.upload(file).then(({ data }) => {
+        sendAudio(data._id);
+      });
+    };
+  };
 
   React.useEffect(() => {
     setState({
@@ -29,16 +82,25 @@ export const Input = () => {
     });
   }, [attachments]);
 
+  const handleRecording = () => {
+    if (!record) {
+      setRecord(!record);
+      onRecord();
+    } else {
+      setRecord(!record);
+      recorder.stop();
+    }
+  };
+
   const inputRef = React.useRef(null);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
       file.preview = await getBase64(file.originFileObj);
-      console.log(123);
     }
-    setState({ ...state, previewImage: file.url || file.preview });
-    setState({ ...state, previewOpen: true });
     setState({
       ...state,
+      previewOpen: true,
+      previewImage: `${file.url || file.preview}`,
       previewTitle:
         file.name || file.url.substring(file.url.lastIndexOf("/") + 1),
     });
@@ -57,20 +119,9 @@ export const Input = () => {
       reader.onerror = (error) => reject(error);
     });
 
-  const [fileList, setFileList] = React.useState([
-    {
-      uid: "-1",
-      name: "image.png",
-      status: "done",
-      url: "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png",
-    },
-  ]);
-
-  const { currentDialogId } = useSelector((state) => state.dialogsSlice);
-
-  const dispatch = useDispatch();
-
   const inputClickHandler = (e) => {
+    socket.emit("DIALOG:TYPING", { currentDialogId, user: infoMe });
+
     if (e.keyCode === 13 || e.type === "click") {
       const obj = {
         text: value,
@@ -82,6 +133,15 @@ export const Input = () => {
       setValue("");
       setAttachments([]);
     }
+  };
+
+  const sendAudio = (audioId) => {
+    const obj = {
+      text: value,
+      dialogId: currentDialogId,
+      attachments: [audioId],
+    };
+    dispatch(sendMessage(obj));
   };
 
   const onSelectFile = async (files) => {
@@ -100,7 +160,7 @@ export const Input = () => {
       ];
       setAttachments(uploaded);
 
-      chatApi.uploadImage(file).then(({ data }) => {
+      chatApi.upload(file).then(({ data }) => {
         setAttachments(
           (uploaded = uploaded.map((item) => {
             if (item.uid === uid) {
@@ -134,18 +194,38 @@ export const Input = () => {
       )}
       <div id="my-area">
         <div className="middle-section__my-area">
-          <input
-            value={value}
-            onKeyUp={inputClickHandler}
-            onChange={(e) => setValue(e.target.value)}
-            placeholder="Введите текст сообщения…"
-            type="text"
-          />
-          <img src={smile} onClick={() => setVisible(!visible)} alt="" />
-          <img onClick={onInputClick} id="camera" src={camera} alt="" />
-          <img src={micro} alt="" />
+          <>
+            <input
+              value={value}
+              onKeyUp={inputClickHandler}
+              onChange={(e) => setValue(e.target.value)}
+              placeholder={
+                !record ? "Введите текст сообщения…" : "Идёт запись..."
+              }
+              type="text"
+              disabled={record}
+            />
+            {!record ? (
+              <img src={smile} onClick={() => setVisible(!visible)} alt="" />
+            ) : (
+              <img id="record" src={recordIco} alt="record" />
+            )}
+            <img
+              style={{ pointerEvents: record && "none" }}
+              onClick={onInputClick}
+              id="camera"
+              src={camera}
+              alt=""
+            />
+            <img src={micro} onClick={handleRecording} alt="" />
 
-          <img src={path} onClick={inputClickHandler} alt="" />
+            <img
+              style={{ pointerEvents: record && "none" }}
+              src={path}
+              onClick={inputClickHandler}
+              alt=""
+            />
+          </>
         </div>
         <input
           ref={inputRef}

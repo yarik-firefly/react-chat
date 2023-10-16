@@ -9,6 +9,7 @@ import AudioMessage from "./AudioMessage";
 import { formatData } from "../../utils/formatData";
 import { useSelector } from "react-redux";
 import BurgerButton from "../Button/BurgerButton";
+import { Modal } from "antd";
 
 export const CorrespondenceItem = ({
   isMy,
@@ -18,56 +19,107 @@ export const CorrespondenceItem = ({
   audio,
   readed,
   attachments,
+  isTyping,
 }) => {
-  console.log(isMy);
+  const [previewImage, setPreviewImage] = React.useState(null);
+
   return (
-    <div
-      className={`middle-section__correspondence${classNames({ __my: isMy })}`}
-    >
+    <>
       <div
-        className={`middle-section__correspondence__avatar${classNames({
+        className={`middle-section__correspondence${classNames({
           __my: isMy,
         })}`}
       >
-        <img src={avatar ? avatar : ""} alt="" />
-      </div>
-      {text ? (
-        <>
-          <div
-            className={`middle-section__correspondence__text${classNames({
-              __my: isMy,
-            })}`}
-          >
-            <span>{text}</span>
-            <span>{formatData(new Date(createdAt))}</span>
-          </div>
-          <div className="middle-section__correspondence__text__attachments">
-            {attachments.length &&
-              attachments.map((el) => (
-                <div style={{ backgroundImage: `url(${el.url})` }} />
-              ))}
-          </div>
-        </>
-      ) : audio ? (
-        <AudioMessage />
-      ) : (
-        <PrintsMess />
-      )}
-
-      {isMy && (
-        <>
-          <BurgerButton id={_id} />
-          <span className="checkout">
-            {readed ? (
-              <img src={check} alt="check" />
+        <div
+          className={`middle-section__correspondence__avatar${classNames({
+            __my: isMy,
+          })}`}
+        >
+          <img src={avatar ? avatar : ""} alt="" />
+        </div>
+        {(text || !text) && (
+          <>
+            {(text && attachments.length >= 1) ||
+            (text && !attachments.length) ? (
+              <>
+                <div
+                  className={`middle-section__correspondence__text${classNames({
+                    __my: isMy,
+                  })}`}
+                >
+                  <span>{text}</span>
+                  <span>{formatData(new Date(createdAt))}</span>
+                </div>
+                <div className="middle-section__correspondence__text__attachments">
+                  {!!attachments.length &&
+                    attachments.map((el) => {
+                      el.ext !== "webm" ? (
+                        <div
+                          style={{ backgroundImage: `url(${el.url})` }}
+                          onClick={() => setPreviewImage(el.url)}
+                        ></div>
+                      ) : (
+                        <AudioMessage audioSrc={el.url} />
+                      );
+                    })}
+                </div>
+              </>
             ) : (
-              <img width={11} src={noCheck} alt="no check" />
+              <div className="middle-section__correspondence__one-photo">
+                <div className="data">{formatData(new Date(createdAt))}</div>
+                <div
+                  className={`middle-section__correspondence__text__attachments${classNames(
+                    { "__one-photo": attachments.length === 1 }
+                  )}`}
+                >
+                  {attachments.length &&
+                    attachments.map((el) =>
+                      el.ext !== "webm" ? (
+                        <div
+                          className={classNames({
+                            "one-photo": attachments.length === 1,
+                          })}
+                          style={{ backgroundImage: `url(${el.url})` }}
+                          onClick={() => setPreviewImage(el.url)}
+                        />
+                      ) : (
+                        <AudioMessage audioSrc={el.url} />
+                      )
+                    )}
+                </div>
+              </div>
             )}
-          </span>
-          <span></span>
-        </>
-      )}
-    </div>
+          </>
+        )}
+
+        {isMy && (
+          <>
+            <BurgerButton id={_id} />
+            <span className="checkout">
+              {readed ? (
+                <img src={check} alt="check" />
+              ) : (
+                <img width={11} src={noCheck} alt="no check" />
+              )}
+            </span>
+          </>
+        )}
+
+        <Modal
+          open={!!previewImage}
+          onCancel={() => setPreviewImage(null)}
+          footer={null}
+        >
+          <img
+            alt="example"
+            style={{
+              width: "100%",
+            }}
+            src={previewImage}
+          />
+        </Modal>
+      </div>
+    </>
   );
 };
 
