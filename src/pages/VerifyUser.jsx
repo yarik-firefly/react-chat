@@ -46,7 +46,7 @@ const VerifyUser = () => {
                 type="primary"
                 key="console"
               >
-                Перейти к профилю
+                Войти
               </Button>,
             ]
           }

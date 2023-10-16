@@ -107,7 +107,7 @@ export const Home = () => {
           </Col>
           <Col span={6}></Col>
           <Col span={18}>
-            <InputMyArea setIsTyping={setIsTyping}/>
+            {currentDialogId && <InputMyArea setIsTyping={setIsTyping} />}
           </Col>
         </Row>
       </div>

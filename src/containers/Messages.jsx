@@ -34,19 +34,19 @@ export const Messages = ({ setIsTyping, isTyping }) => {
 
   return (
     <>
-      {!messages.length && statusMessage !== "SUCCESS" ? (
+      {statusMessage === "LOADING" ? (
         <div id="center">
-          <MailOutlined />
-          <p>Откройте Диалог</p>
+          <Loading />
         </div>
       ) : statusMessage === "SUCCESS" && !messages.length ? (
         <div id="center">
           <MailOutlined />
           <p>Диалог Пуст</p>
         </div>
-      ) : statusMessage === "LOADING" ? (
+      ) : !messages.length && statusMessage !== "SUCCESS" ? (
         <div id="center">
-          <Loading />
+          <MailOutlined />
+          <p>Откройте Диалог</p>
         </div>
       ) : statusMessage === "SUCCESS" && messages.length ? (
         messages.map((el) => (

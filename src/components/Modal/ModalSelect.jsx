@@ -5,6 +5,7 @@ import { findUsers } from "../../redux/slices/userSlice";
 import "./Modal.scss";
 import { createDialog } from "../../redux/slices/dialogsSlice";
 import debounce from "lodash.debounce";
+import Loading from "../Loading";
 
 export const ModalSelect = ({ setShow, show }) => {
   const { TextArea } = Input;
@@ -26,6 +27,7 @@ export const ModalSelect = ({ setShow, show }) => {
       partner: value,
     };
     dispatch(createDialog(obj));
+    setShow(false);
   };
   const filterOption = (input, option) =>
     (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
@@ -49,7 +51,7 @@ export const ModalSelect = ({ setShow, show }) => {
       okButtonProps={{ disabled: !value || !valueInput }}
     >
       <Select
-        loading={statusFindUser === "LOADING"}
+        listItemHeight={10}
         showSearch
         placeholder="Введите имя или почту пользователя"
         optionFilterProp="children"
@@ -58,6 +60,7 @@ export const ModalSelect = ({ setShow, show }) => {
         // filterOption={filterOption}
         // options={options}
         style={{ width: `100%` }}
+        focus
       >
         {options}
       </Select>

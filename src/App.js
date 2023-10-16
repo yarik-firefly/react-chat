@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import "./App.scss";
 import AuthPage from "./pages/AuthPage";
@@ -12,6 +12,7 @@ import VerifyUser from "./pages/VerifyUser";
 
 function App() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { auth, statusMe, infoMe, statusLogin } = useSelector(
     (state) => state.authSlice
   );
@@ -30,6 +31,10 @@ function App() {
   }, []);
 
   React.useEffect(() => {
+    if (pathname === "/user/verify") {
+      return;
+    }
+
     if (auth) {
       navigate("/main");
     } else {
