@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "../../axios/axios";
 
 export const findUsers = createAsyncThunk("users/findUsers", async (name) => {
-  const { data } = await (name ? axios.get("/user/find?query=" + name) : null);
+  const { data } = await (name ? axios.get("user/find?query=" + name) : null);
 
   return data.user;
 });

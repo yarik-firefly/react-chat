@@ -10,7 +10,7 @@ export const register = createAsyncThunk("auth/register", async (data) => {
 export const login = createAsyncThunk(
   "auth/login",
   async (data, { dispatch }) => {
-    const { data: info, status } = await axios.post("/login", data);
+    const { data: info, status } = await axios.post("login", data);
 
     dispatch(getMe());
     dispatch(isAuth(true));
@@ -25,7 +25,7 @@ export const getMe = createAsyncThunk("auth/getMe", async (_, { dispatch }) => {
 });
 
 export const verifyUser = createAsyncThunk("auth/verifyUser", async (hash) => {
-  const { data } = await axios.get("/user/verify?hash=" + hash);
+  const { data } = await axios.get("user/verify?hash=" + hash);
   return data;
 });
 

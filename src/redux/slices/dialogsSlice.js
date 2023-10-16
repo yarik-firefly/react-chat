@@ -10,14 +10,14 @@ export const getMessages = createAsyncThunk(
   "dialogs/getMessages",
   async (id) => {
     socket.emit("DIALOG:JOIN", id);
-    const { data } = await axios.get("/messages?dialog=" + id);
+    const { data } = await axios.get("messages?dialog=" + id);
 
     return data;
   }
 );
 
 export const getDialogs = createAsyncThunk("dialogs/getDialogs", async () => {
-  const { data } = await axios.get(`/dialogs`);
+  const { data } = await axios.get(`dialogs`);
 
   return data.data;
 });

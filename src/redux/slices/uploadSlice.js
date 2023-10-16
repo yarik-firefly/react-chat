@@ -7,7 +7,7 @@ export const upload = createAsyncThunk(
     const formData = new FormData();
 
     formData.append("file", info);
-    const { data} = await axios.post("/files", formData, {
+    const { data} = await axios.post("files", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
