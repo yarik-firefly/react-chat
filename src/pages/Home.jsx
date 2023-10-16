@@ -53,7 +53,7 @@ export const Home = () => {
     socket.on("SERVER:NEW_MESSAGE", getDialogForUser);
     socket.on("CLIENT:ONLINE", getDialogForUser);
 
-    socket.emit("CLIENT:ONLINE", { userId: infoMe._id });
+    socket.emit("CLIENT:ONLINE", { userId: infoMe && infoMe._id });
 
     return () => {
       socket.removeListener("SERVER:DIALOG_CREATED", getDialogForUser);

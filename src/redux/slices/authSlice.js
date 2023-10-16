@@ -12,6 +12,7 @@ export const login = createAsyncThunk(
   async (data, { dispatch }) => {
     const { data: info, status } = await axios.post("login", data);
 
+    window.localStorage.setItem("token", info.token);
     dispatch(getMe());
     dispatch(isAuth(true));
     return info;
