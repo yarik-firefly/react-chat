@@ -5,6 +5,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
 
+  &:where(.css-pr0fja).ant-col-offset-8 {
+    margin-inline-start: 0 !important;
+  }
+
   .ant-col.ant-col-16.ant-col-offset-8.ant-form-item-control.css-dev-only-do-not-override-pr0fja {
     margin-inline-start: 0 !important;
   }
