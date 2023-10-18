@@ -18,6 +18,8 @@ function App() {
   );
   const dispatch = useDispatch();
 
+  const isReady = statusMe !== "LOADING";
+
   const checkAuth = () => {
     try {
       dispatch(getMe());
@@ -35,7 +37,7 @@ function App() {
       return;
     }
 
-    if (auth) {
+    if (!!auth) {
       navigate("/main");
     } else {
       navigate("/auth");
@@ -45,18 +47,19 @@ function App() {
     // }
   }, [auth]);
 
-  if (statusMe === "LOADING" && !auth) {
+  if (!isReady) {
     return (
       <div className="App__loading">
         <Loading />
       </div>
     );
   }
+
   return (
     <div className="App">
       <Routes>
-        <Route path="/auth" element={<AuthPage />} />
         <Route path="/main" element={<Home />} />
+        <Route path="/auth" element={<AuthPage />} />
         <Route path="/user/verify" element={<VerifyUser />} />
       </Routes>
     </div>

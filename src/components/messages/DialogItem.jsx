@@ -36,24 +36,39 @@ export const DialogItem = ({
 
   const color = Math.round(Math.random() * 12);
 
+  const screen = window.screen.availWidth;
 
   const dispatch = useDispatch();
   const { dialogs, currentDialogId, statusDialogs } = useSelector(
     (state) => state.dialogsSlice
   );
 
+  const onClickMobile = () => {
+    const grid = document.querySelector(
+      ".middle-section .ant-col.ant-col-18.css-dev-only-do-not-override-pr0fja"
+    );
+    const scrollBar = document.querySelector(".middle-section__scroll-bar");
+    const input = document.querySelector("#my-area");
+    grid.style.display = "block";
+    scrollBar.style.display = "none";
+    input.style.display = "block";
+
+    dispatch(getMessages(_id));
+  };
+
   const { infoMe } = useSelector((state) => state.authSlice);
 
-
   const myPartner = () => {
-    return infoMe._id === author._id ? partner : author
-  }
+    return infoMe._id === author._id ? partner : author;
+  };
 
-  const {fullname, isOnline} = myPartner()
+  const { fullname, isOnline } = myPartner();
 
   return (
     <div
-      onClick={() => dispatch(getMessages(_id))}
+      onClick={
+        screen < 400 ? () => onClickMobile() : () => dispatch(getMessages(_id))
+      }
       className={`middle-section__dialogs${classNames({
         __select: selectDialog,
       })}`}

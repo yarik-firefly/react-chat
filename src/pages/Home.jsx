@@ -29,6 +29,8 @@ import Messages from "../containers/Messages";
 export const Home = () => {
   const barRef = React.useRef(null);
 
+  const screen = window.screen.availWidth < 400;
+
   const dispatch = useDispatch();
   const { statusDialogs, dialogs, messages, currentDialogId } = useSelector(
     (state) => state.dialogsSlice
@@ -107,8 +109,11 @@ export const Home = () => {
           </Col>
           <Col span={6}></Col>
           <Col span={18}>
-            {currentDialogId && <InputMyArea setIsTyping={setIsTyping} />}
+            {currentDialogId && !screen && (
+              <InputMyArea setIsTyping={setIsTyping} />
+            )}
           </Col>
+          {screen && <InputMyArea setIsTyping={setIsTyping} />}
         </Row>
       </div>
     </>

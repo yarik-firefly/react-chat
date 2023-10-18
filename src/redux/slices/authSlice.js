@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
 
 export const getMe = createAsyncThunk("auth/getMe", async (_, { dispatch }) => {
   const { data } = await axios.get("/auth/me");
-  dispatch(isAuth(true));
+  // dispatch(isAuth(true));
   return data.data;
 });
 

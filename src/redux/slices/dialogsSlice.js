@@ -70,6 +70,9 @@ const dialogSlice = createSlice({
     createNewDialog(state, action) {
       state.dialogs.push(action.payload.dialog);
     },
+    dialogIdToNull(state) {
+      state.currentDialogId = undefined
+    }
     // deleteMessage(state, action) {},
   },
   extraReducers: {
@@ -125,6 +128,6 @@ const dialogSlice = createSlice({
   },
 });
 
-export const { addMessage, createNewDialog } = dialogSlice.actions;
+export const { addMessage, createNewDialog, dialogIdToNull } = dialogSlice.actions;
 
 export default dialogSlice.reducer;

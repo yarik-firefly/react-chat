@@ -62,10 +62,10 @@ export const AudioMessage = ({audioSrc}) => {
         {!play ? <CaretRightOutlined /> : <PauseOutlined />}
       </span>
       <span>
-        <img src={audioPath} alt="" />
+        <img id="audio-wave" src={audioPath} alt="" />
         <audio ref={audioRef} src={audioSrc} />
       </span>
-      <span>{currentTime(time)}</span>
+      <span id="current-time">{currentTime(time)}</span>
     </div>
   );
 };

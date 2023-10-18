@@ -1,6 +1,10 @@
 .App {
   /* position: fixed; */
 
+  .non-screen {
+    transform: translateX(-100%);
+  }
+
   &__loading {
     height: 100vh;
     display: flex;

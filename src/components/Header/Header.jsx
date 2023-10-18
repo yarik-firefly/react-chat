@@ -4,13 +4,17 @@ import { Row, Col } from "antd";
 import icon from "../../static/img/Bitmap.png";
 import icon2 from "../../static/img/Bitmap (1).png";
 import dod from "../../static/img/Bitmap (2).png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalSelect from "../Modal/ModalSelect";
+import { ArrowLeftOutlined } from "@ant-design/icons";
+import { dialogIdToNull } from "../../redux/slices/dialogsSlice";
 
 export const Header = ({ data }) => {
   const { dialogs, currentDialogId, statusDialogs } = useSelector(
     (state) => state.dialogsSlice
   );
+
+  const dispatch = useDispatch();
 
   const [show, setShow] = useState();
 
@@ -41,6 +45,30 @@ export const Header = ({ data }) => {
     partner = dialogObj.author;
   }
 
+  const renderBackButton = () => {
+    return (
+      currentDialogId && (
+        <ArrowLeftOutlined onClick={() => handleBackDialog()} />
+      )
+    );
+  };
+
+  const screen = window.screen.availWidth;
+
+  const handleBackDialog = () => {
+    const grid = document.querySelector(
+      ".middle-section .ant-col.ant-col-18.css-dev-only-do-not-override-pr0fja"
+    );
+
+    const input = document.querySelector("#my-area");
+    input.style.display = "none";
+
+    const scrollBar = document.querySelector(".middle-section__scroll-bar");
+    grid.style.display = "none";
+    scrollBar.style.display = "block";
+    dispatch(dialogIdToNull());
+  };
+
   return (
     <header className="home__header">
       <Row>
@@ -48,7 +76,7 @@ export const Header = ({ data }) => {
           <div className="first-col">
             <div className="first-col__title">
               <span>
-                <img src={icon} alt="" />
+                {screen < 400 ? renderBackButton() : <img src={icon} alt="" />}
               </span>
               <span>Список диалогов</span>
               <span>
