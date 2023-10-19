@@ -1,0 +1,110 @@
+.my-page-wrap {
+  width: 100%;
+  &__avatar {
+    position: relative;
+
+    #center {
+      flex-direction: column;
+      justify-content: center;
+      height: 305.6px;
+      display: flex;
+      align-items: center;
+
+      p {
+        font-size: 12px;
+        color: #a6a6a6;
+      }
+
+      svg {
+        font-size: 42px;
+
+        fill: #dce0e6;
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  &__info {
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+
+    & :first-child {
+      font: 12px;
+      font-weight: 500;
+      color: white;
+    }
+
+    & :last-child {
+      font: 10px;
+      font-weight: 400;
+      color: #cdcdcd;
+    }
+  }
+
+  &__under-avatar {
+    padding: 15px;
+    cursor: pointer;
+
+    &__save {
+      left: 64px;
+      bottom: 90px;
+      position: absolute;
+    }
+
+    div {
+      height: 50px;
+      padding: 10px;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      border-radius: 20px;
+      transition: box-shadow 0.2s linear;
+
+      .ant-upload.ant-upload-select {
+        height: 0;
+        padding: 0;
+        &:hover {
+          box-shadow: none;
+        }
+      }
+
+      .ant-upload-list.ant-upload-list-text {
+        display: none;
+      }
+
+      .ant-upload {
+        display: flex;
+        align-items: center;
+      }
+
+      .ant-upload-wrapper.css-dev-only-do-not-override-pr0fja {
+        position: relative;
+      }
+
+      .ant-upload-list.ant-upload-list-picture {
+        position: absolute;
+        top: 50px;
+      }
+
+      &:hover {
+        -webkit-box-shadow: 0px 0px 30px 13px rgba(191, 189, 191, 0.88);
+        -moz-box-shadow: 0px 0px 30px 13px rgba(191, 189, 191, 0.88);
+        box-shadow: 0px 0px 30px 3px rgba(191, 189, 191, 0.88);
+      }
+
+      span {
+        margin-right: 15px;
+        width: 20px;
+        text-wrap: nowrap;
+
+        svg {
+          font-size: 25px;
+        }
+      }
+    }
+  }
+}

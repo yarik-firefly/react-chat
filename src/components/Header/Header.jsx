@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import "../../pages/Home.scss";
-import { Row, Col } from "antd";
-import icon from "../../static/img/Bitmap.png";
+import { Row, Col, Button } from "antd";
 import icon2 from "../../static/img/Bitmap (1).png";
 import dod from "../../static/img/Bitmap (2).png";
 import { useDispatch, useSelector } from "react-redux";
 import ModalSelect from "../Modal/ModalSelect";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { dialogIdToNull } from "../../redux/slices/dialogsSlice";
+import { MenuOutlined } from "@ant-design/icons";
+import DropDown from "../DropDown/DropDown";
 
 export const Header = ({ data }) => {
-  const { dialogs, currentDialogId, statusDialogs } = useSelector(
+  const { dialogs, currentDialogId, statusDialogs, toggle } = useSelector(
     (state) => state.dialogsSlice
   );
 
@@ -76,11 +77,24 @@ export const Header = ({ data }) => {
           <div className="first-col">
             <div className="first-col__title">
               <span>
-                {screen < 400 ? renderBackButton() : <img src={icon} alt="" />}
+                {screen < 400 ? (
+                  renderBackButton()
+                ) : (
+                  <DropDown>
+                    <Button type="text">
+                      <MenuOutlined />
+                    </Button>
+                  </DropDown>
+                )}
               </span>
               <span>Список диалогов</span>
               <span>
-                <img onClick={() => setShow(!show)} src={icon2} alt="icon" />
+                <img
+                  onClick={() => setShow(!show)}
+                  src={icon2}
+                  alt="icon"
+                  style={{ pointerEvents: toggle === "MENU" ? "none" : "" }}
+                />
               </span>
             </div>
           </div>

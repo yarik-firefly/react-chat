@@ -25,6 +25,7 @@ import {
 } from "../redux/slices/dialogsSlice";
 import Dialogs from "../containers/Dialogs";
 import Messages from "../containers/Messages";
+import MyPage from "../components/MyPage/MyPage";
 
 export const Home = () => {
   const barRef = React.useRef(null);
@@ -32,9 +33,8 @@ export const Home = () => {
   const screen = window.screen.availWidth < 400;
 
   const dispatch = useDispatch();
-  const { statusDialogs, dialogs, messages, currentDialogId } = useSelector(
-    (state) => state.dialogsSlice
-  );
+  const { statusDialogs, dialogs, messages, currentDialogId, toggle } =
+    useSelector((state) => state.dialogsSlice);
   const { infoMe } = useSelector((state) => state.authSlice);
 
   const [isTyping, setIsTyping] = React.useState(false);
@@ -90,17 +90,23 @@ export const Home = () => {
       <div className="middle-section">
         <Row>
           <Col span={6}>
-            <div className="middle-section__input">
-              <Space.Compact size="large">
-                <Input
-                  addonBefore={<SearchOutlined />}
-                  placeholder="Поиск среди контактов"
-                />
-              </Space.Compact>
-            </div>
-            <div className="middle-section__scroll-bar">
-              <Dialogs />
-            </div>
+            {toggle === "DIALOG" ? (
+              <>
+                <div className="middle-section__input">
+                  <Space.Compact size="large">
+                    <Input
+                      addonBefore={<SearchOutlined />}
+                      placeholder="Поиск среди контактов"
+                    />
+                  </Space.Compact>
+                </div>
+                <div className="middle-section__scroll-bar">
+                  <Dialogs />
+                </div>
+              </>
+            ) : (
+             <MyPage />
+            )}
           </Col>
           <Col span={18}>
             <div ref={barRef} className="middle-section__right-bar">

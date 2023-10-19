@@ -62,7 +62,7 @@ export const DialogItem = ({
     return infoMe._id === author._id ? partner : author;
   };
 
-  const { fullname, isOnline } = myPartner();
+  const { fullname, isOnline, avatar } = myPartner();
 
   return (
     <div
@@ -75,10 +75,10 @@ export const DialogItem = ({
     >
       <div style={{ display: "flex" }}>
         <div
-          style={{ backgroundColor: colors[3] }}
+          style={{ backgroundColor: !avatar && colors[3] }}
           className="middle-section__dialogs__avatar"
         >
-          <img src={null} alt="" />
+          <img src={avatar ? avatar : null} />
           {isOnline && (
             <b className="middle-section__dialogs__avatar__online"></b>
           )}

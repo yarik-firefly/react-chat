@@ -56,6 +56,7 @@ const initialState = {
   statusMessage: "",
   statusDialogs: "",
   statusSend: "",
+  toggle: "DIALOG",
 };
 
 const dialogSlice = createSlice({
@@ -71,8 +72,11 @@ const dialogSlice = createSlice({
       state.dialogs.push(action.payload.dialog);
     },
     dialogIdToNull(state) {
-      state.currentDialogId = undefined
-    }
+      state.currentDialogId = undefined;
+    },
+    toggleMenu(state, action) {
+      state.toggle = action.payload;
+    },
     // deleteMessage(state, action) {},
   },
   extraReducers: {
@@ -128,6 +132,7 @@ const dialogSlice = createSlice({
   },
 });
 
-export const { addMessage, createNewDialog, dialogIdToNull } = dialogSlice.actions;
+export const { addMessage, createNewDialog, dialogIdToNull, toggleMenu } =
+  dialogSlice.actions;
 
 export default dialogSlice.reducer;

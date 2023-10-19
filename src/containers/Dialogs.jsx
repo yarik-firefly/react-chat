@@ -10,31 +10,30 @@ const Dialogs = () => {
   const { dialogs, statusDialogs, currentDialogId } = useSelector(
     (state) => state.dialogsSlice
   );
-  const dispatch = useDispatch();
 
   // const onNewMessage = () => (mes) => {
   //   console.log(mes);
   //   dispatch(addMessage(mes));
   // };
 
-//   React.useEffect(() => {
-//     // if (currentDialogId) {
-//     //   dispatch(getMessages(currentDialogId));
-//     // }
+  //   React.useEffect(() => {
+  //     // if (currentDialogId) {
+  //     //   dispatch(getMessages(currentDialogId));
+  //     // }
 
-//     socket.on("SERVER:NEW_MESSAGE", (data) => console.log(data));
+  //     socket.on("SERVER:NEW_MESSAGE", (data) => console.log(data));
 
-//     return () => {
-//       socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
-//     };
-//   }, []);
+  //     return () => {
+  //       socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
+  //     };
+  //   }, []);
 
   return (
     <div>
       {dialogs.length ? (
         dialogs.map((el) => (
           <DialogItem
-          selectDialog={currentDialogId === el._id}
+            selectDialog={currentDialogId === el._id}
             key={el._id}
             isSuccess={statusDialogs === "SUCCESS"}
             {...el}

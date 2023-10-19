@@ -29,7 +29,7 @@
         justify-content: space-between;
 
         & :first-child {
-          margin-right: 10px;
+          // margin-right: 10px;
           img {
             margin: 0;
           }
@@ -413,6 +413,12 @@
       border-radius: 50%;
       position: relative;
 
+      img {
+        width: inherit;
+        height: inherit;
+        border-radius: inherit;
+      }
+
       &__online {
         width: 8px;
         height: 8px;
@@ -443,6 +449,20 @@
       display: flex;
       flex-direction: column-reverse;
       align-items: start;
+    }
+
+    &__avatar {
+      img {
+        width: inherit;
+        height: inherit;
+      }
+
+      &__my {
+        img {
+          width: inherit;
+          height: inherit;
+        }
+      }
     }
 
     // .one-photo {

@@ -1,17 +1,35 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axios } from "../../axios/axios";
 
-export const upload = createAsyncThunk(
-  "upload/uploadImage",
-  async (info) => {
+export const upload = createAsyncThunk("upload/uploadImage", async (info) => {
+  const formData = new FormData();
+
+  formData.append("file", info);
+  const { data } = await axios.post("files", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return data;
+});
+
+export const uploadAvatar = createAsyncThunk(
+  "upload/uploadAvatar",
+  async (info, { getState }) => {
+    const {
+      authSlice: { infoMe },
+    } = getState();
     const formData = new FormData();
 
     formData.append("file", info);
-    const { data} = await axios.post("files", formData, {
+    const { data } = await axios.post("avatar", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+
+    infoMe.avatar = data;
 
     return data;
   }
@@ -20,6 +38,8 @@ export const upload = createAsyncThunk(
 const initialState = {
   files: [],
   statusUploadImage: "",
+  avatar: "",
+  statusAvatar: "",
 };
 
 const uploadSlice = createSlice({
@@ -40,6 +60,17 @@ const uploadSlice = createSlice({
     },
     [upload.rejected]: (state, action) => {
       state.statusUploadImage = "ERROR";
+    },
+    //========================================
+    [uploadAvatar.pending]: (state, action) => {
+      state.statusAvatar = "LOADING";
+    },
+    [uploadAvatar.fulfilled]: (state, action) => {
+      state.statusAvatar = "SUCCESS";
+      state.avatar = action.payload;
+    },
+    [uploadAvatar.rejected]: (state, action) => {
+      state.statusAvatar = "ERROR";
     },
   },
 });

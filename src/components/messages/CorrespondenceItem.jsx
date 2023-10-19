@@ -20,6 +20,7 @@ export const CorrespondenceItem = ({
   readed,
   attachments,
   isTyping,
+  user,
 }) => {
   const [previewImage, setPreviewImage] = React.useState(null);
 
@@ -35,7 +36,7 @@ export const CorrespondenceItem = ({
             __my: isMy,
           })}`}
         >
-          <img src={avatar ? avatar : ""} alt="" />
+          <img src={user ? user.avatar : ""} alt="" />
         </div>
         {(text || !text) && (
           <>

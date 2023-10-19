@@ -10,7 +10,7 @@ export const register = createAsyncThunk("auth/register", async (data) => {
 export const login = createAsyncThunk(
   "auth/login",
   async (data, { dispatch }) => {
-    const { data: info, status } = await axios.post("login", data);
+    const { data: info } = await axios.post("login", data);
 
     window.localStorage.setItem("token", info.token);
     dispatch(getMe());
@@ -46,6 +46,9 @@ const authSlice = createSlice({
   reducers: {
     isAuth(state, action) {
       state.auth = action.payload;
+    },
+    changeAvatar(state, action) {
+      state.infoMe.avatar = action.payload;
     },
   },
   extraReducers: {
@@ -97,6 +100,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { isAuth } = authSlice.actions;
+export const { isAuth, changeAvatar } = authSlice.actions;
 
 export default authSlice.reducer;
