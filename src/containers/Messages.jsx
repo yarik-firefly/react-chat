@@ -52,7 +52,7 @@ export const Messages = ({ setIsTyping, isTyping }) => {
         messages.map((el) => (
           <CorrespondenceItem
             key={el._id}
-            isMy={el.user?._id === infoMe._id}
+            isMy={el.user._id === infoMe._id}
             {...el}
             isTyping={el.user !== infoMe._id && isTyping}
           />
