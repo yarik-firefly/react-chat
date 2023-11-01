@@ -1,7 +1,7 @@
 import { UploadFile } from "antd";
 
-export interface IAttachments {
-  uid: string | number;
+export type TypeAttachments =  {
+  uid: number;
   name: string;
   status: string;
   url: string;
@@ -11,7 +11,7 @@ export interface ISetState {
   previewOpen: boolean;
   previewImage: string;
   previewTitle: string;
-  fileList: UploadFile<IAttachments>[];
+  fileList: UploadFile<TypeAttachments>[];
 }
 
 export type TypeUploaded = {

@@ -15,7 +15,7 @@ import socket from "../../core/socket";
 import { AppDispatch, RootState } from "../../redux/store";
 import { ISendMessageRequest, IUploadResponse } from "../../types/slice";
 import {
-  IAttachments,
+  TypeAttachments,
   ISetState,
   IUploadData,
   TypeUploaded,
@@ -29,7 +29,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
   const [value, setValue] = React.useState<string>("");
   const [visible, setVisible] = React.useState<boolean>(false);
   const [attachments, setAttachments] = React.useState<
-    UploadFile<IAttachments>[]
+    UploadFile<TypeAttachments>[]
   >([]);
   const [record, setRecord] = React.useState<boolean>(false);
   const [recorder, setMediaRecorder] = React.useState<MediaRecorder>();
@@ -170,7 +170,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
   };
 
   const onSelectFile = async (files: TypeUploadedData[]) => {
-    let uploaded: UploadFile<IAttachments>[] = [];
+    let uploaded: UploadFile<TypeAttachments>[] = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
@@ -178,7 +178,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       uploaded = [
         ...uploaded,
         {
-          uid,
+          uid: uid as number,
           name: file.name,
           status: "uploading",
         },
