@@ -169,7 +169,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
   };
 
   const onSelectFile = async (files: TypeUploadedData[]) => {
-    let uploaded: UploadFile<TypeAttachments>[] = [];
+    let uploaded: any /*UploadFile<TypeAttachments>[] */ = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
@@ -187,7 +187,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
 
       chatApi.upload(file).then(({ data }: IUploadData) => {
         setAttachments(
-          (uploaded = uploaded.map((item) => {
+          (uploaded = uploaded.map((item: any) => {
             if (item.uid === uid) {
               console.log(data._id);
               item = {

@@ -1,12 +1,11 @@
 import { UploadFile } from "antd";
 
-export type TypeAttachments =  {
-  uid: number ;
+export type TypeAttachments = {
+  uid: number;
   name: string;
   status: string;
   url: string;
-  _id: string
-}
+};
 
 export interface ISetState {
   previewOpen: boolean;
