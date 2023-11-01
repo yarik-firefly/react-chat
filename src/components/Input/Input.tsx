@@ -88,9 +88,8 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
     };
 
     recorder.ondataavailable = (e: BlobEvent) => {
-      const file = new File([e.data], "audio.webm");
+      const file: any = new File([e.data], "audio.webm");
 
-      //@ts-ignore
       chatApi.upload(file).then(({ data }: IUploadData) => {
         sendAudio(data._id);
       });
