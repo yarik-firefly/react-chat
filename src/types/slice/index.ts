@@ -151,7 +151,7 @@ export interface IDialog {
 export interface ISendMessageRequest {
   text: string;
   dialogId: string;
-  attachments?: (string | number)[];
+  attachments?: (string | number | undefined)[];
 }
 
 export interface ISendMsgResponse {

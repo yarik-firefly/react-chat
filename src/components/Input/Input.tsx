@@ -149,7 +149,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       const obj: ISendMessageRequest = {
         text: value,
         dialogId: currentDialogId as string,
-        attachments: attachments.map((item) => item.uid),
+        attachments: attachments.map((item) => item.fileName), // в filename содержится id
       };
       console.log(obj);
       dispatch(sendMessage(obj));
@@ -178,7 +178,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       uploaded = [
         ...uploaded,
         {
-          uid: uid as number,
+          uid,
           name: file.name,
           status: "uploading",
         },
@@ -189,13 +189,14 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       chatApi.upload(file).then(({ data }: IUploadData) => {
         setAttachments(
           (uploaded = uploaded.map((item) => {
-            if ((item.uid as number) === uid) {
+            if (item.uid === uid) {
               console.log(data._id);
               item = {
-                uid: data._id as string,
+                uid,
                 name: data.filename,
                 url: data.url,
                 status: "done",
+                fileName: data._id,
               };
             }
             console.log(item.uid);
