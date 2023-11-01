@@ -1,9 +1,10 @@
 import { UploadFile } from "antd";
 
 export interface IAttachments {
-  uid: string;
+  uid: string | number;
   name: string;
   status: string;
+  url: string;
 }
 
 export interface ISetState {

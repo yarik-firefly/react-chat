@@ -1,5 +1,5 @@
 import React, { ChangeEvent, SyntheticEvent } from "react";
-import "../../pages/Home.scss"
+import "../../pages/Home.scss";
 import EmojiPicker, { EmojiClickData, EmojiStyle } from "emoji-picker-react";
 
 import smile from "../../static/img/Bitmap (5).png";
@@ -141,12 +141,9 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       reader.onerror = (error) => reject(error);
     });
 
-  const inputClickHandler = <TypeEvent extends UIEvent | SyntheticEvent>(
-    e: TypeEvent
-  ): void => {
+  const inputClickHandler = (e: any): void => {
     socket.emit("DIALOG:TYPING", { currentDialogId, user: infoMe });
 
-    //@ts-ignore
     if (e.key === "Enter" || e.type === "click") {
       setIsTyping(false);
       const obj: ISendMessageRequest = {
@@ -154,6 +151,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
         dialogId: currentDialogId as string,
         attachments: attachments.map((item) => item.uid),
       };
+      console.log(obj);
       dispatch(sendMessage(obj));
 
       setValue("");
@@ -167,6 +165,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       dialogId: currentDialogId as string,
       attachments: [audioId],
     };
+
     dispatch(sendMessage(obj));
   };
 
@@ -176,7 +175,6 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
       const file = files[i];
 
       const uid = Math.round(Math.random() * 1000);
-      //@ts-ignore
       uploaded = [
         ...uploaded,
         {
@@ -186,21 +184,23 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
         },
       ];
       setAttachments(uploaded);
+      console.log(file);
 
-      chatApi.upload(file).then((data: IUploadResponse["data"]) => {
+      chatApi.upload(file).then(({ data }: IUploadData) => {
         setAttachments(
           (uploaded = uploaded.map((item) => {
-            if (+item.uid === uid) {
-              console.log(data);
+            if ((item.uid as number) === uid) {
+              console.log(data._id);
               item = {
-                uid: +data._id,
+                uid: data._id as string,
                 name: data.filename,
                 url: data.url,
                 status: "done",
               };
             }
+            console.log(item.uid);
             return item;
-          })) as UploadFile<IAttachments>[]
+          }))
         );
       });
     }
@@ -227,9 +227,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
           <>
             <input
               value={value}
-              onKeyUp={(e) =>
-                inputClickHandler<React.KeyboardEvent<HTMLInputElement>>(e)
-              }
+              onKeyUp={(e) => inputClickHandler(e)}
               onChange={(e) => setValue(e.target.value)}
               placeholder={
                 !record ? "Введите текст сообщения…" : "Идёт запись..."
@@ -254,9 +252,7 @@ export const Input = ({ setIsTyping }: Omit<IMessagesProps, "isTyping">) => {
             <img
               style={{ pointerEvents: record ? "none" : undefined }}
               src={path}
-              onClick={(e) =>
-                inputClickHandler<React.MouseEvent<HTMLImageElement>>(e)
-              }
+              onClick={(e) => inputClickHandler(e)}
               alt=""
             />
           </>

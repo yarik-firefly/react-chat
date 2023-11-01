@@ -204,6 +204,10 @@ export interface IUploadState {
   statusAvatar: Status.ERROR | Status.LOADING | Status.SUCCESS | Status.VOID;
 }
 
+
+
+
+
 export interface IUploadResponse {
   data: {
     url: string;

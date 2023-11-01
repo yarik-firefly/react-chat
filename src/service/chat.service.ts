@@ -14,7 +14,7 @@ class chatApi {
 
     //@ts-ignore
     formData.append("file", info);
-    const { data } = await axios.post<IUploadResponse["data"]>(
+    const { data } = await axios.post<IUploadResponse>(
       "/files",
       formData,
       {

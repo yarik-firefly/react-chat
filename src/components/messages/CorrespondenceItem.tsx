@@ -60,13 +60,13 @@ export const CorrespondenceItem = ({
                 <div className="middle-section__correspondence__text__attachments">
                   {!!attachments.length &&
                     attachments.map((el: TypeAttachments) => {
-                      el.ext !== "webm" ? (
+                      el.ext === "webm" ? (
+                        <AudioMessage audioSrc={el.url} />
+                      ) : (
                         <div
                           style={{ backgroundImage: `url(${el.url})` }}
                           onClick={() => setPreviewImage(el.url)}
                         ></div>
-                      ) : (
-                        <AudioMessage audioSrc={el.url} />
                       );
                     })}
                 </div>

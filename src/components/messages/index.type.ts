@@ -14,7 +14,7 @@ export interface ICorrespondenceItem {
 }
 
 export type TypeAttachments = {
-  ext: string;
+  ext?: string;
   url: string;
 };
 
