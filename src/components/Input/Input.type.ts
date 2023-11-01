@@ -1,7 +1,7 @@
 import { UploadFile } from "antd";
 
 export type TypeAttachments =  {
-  uid: number;
+  uid: number | string;
   name: string;
   status: string;
   url: string;
